@@ -51,37 +51,23 @@ implementation 'gr.datamation:translator-rtgs:1.0.0:demo@jar'
 | MT message | MX message |
 | --- | --- |
 |MT103|pacs.008.001.08|
-|MT103STP|pacs.008.001.08|
-|MT101|pain.001.001.09|
-|MT202COV|pacs.009.001.08|
-|MT202|pacs.009.001.08|
-|MT200|pacs.009.001.08|
-|MT940|camt.053.001.08|
-|MT950|camt.053.001.08|
-|MT910|camt.054.001.08|
-|MT900|camt.054.001.08|
 |MT103(Return)|pacs.004.001.09|
+|MT202|pacs.009.001.08|
+|MT202COV|pacs.009.001.08|
 |MT202(Return)|pacs.004.001.09|
-|MT942|camt.052.001.08|
-|MT941|camt.052.001.08|
 
 #### Supported Translations MX > MT From Message To Message
 
 | MX message | MT message |
 | --- | --- |
 |pacs.008.001.08|MT103|
-|pacs.008.001.08.stp.eu | MT103STP |
-|pacs.009.001.08.cov | MT202COV |
-|pacs.009.001.08.core | MT202 |
-|pacs.009.001.08|MT200|
-|pain.001.001.09|MT101|
+|pacs.009.001.08|MT202COV|
+|pacs.009.001.08|MT202|
+|pacs.004.001.09|MT103(Return)|
+|pacs.004.001.09|MT202(Return)|
 |camt.053.001.08|MT940|
 |camt.054.001.08|MT910|
 |camt.054.001.08|MT900|
-|pacs.004.001.09|MT103(Return)|
-|pacs.004.001.09|MT202(Return)|
-|camt.052.001.08|MT942|
-|camt.052.001.08|MT941|
 
 #### Instructions
 In order to translate an MT Message to MX Message and vice versa, you only need to call the library with the message that you want to translate and it automatically translates the message to the relevant format. The only restriction is that the message should be included in the table above.
@@ -120,22 +106,17 @@ Both Exceptions contain a validationErrorList attribute which contains a descrip
 #### Modify the generated message
 Once you have the translated message as text, you can use our other Financial Messaging Libraries ([ISO20022](https://github.com/Payment-Components/demo-iso20022) and [MT](https://github.com/Payment-Components/demo-swift-mt)) in order to create a Java Object and make any changes you want.
 
-In order to create an ISO20022 Java Object use the below code. The class `FIToFICustomerCreditTransfer08` may vary depending on the ISO20022 Message Type.   
-_More information about RTGS Messages handling is available in PaymentComponents [wiki](https://wiki.paymentcomponents.com/display/SL/ISO20022+Documentation#ISO20022Documentation-RTGSHandling) and [GitHub](https://github.com/Payment-Components/demo-iso20022#more-features-are-included-in-the-paid-version-like)._
+In order to create an ISO20022 Java Object use the below code. The object class `FinancialInstitutionCreditTransfer08` may vary depending on the ISO20022 Message Type.   
+_More information about RTGS Messages handling is available in PaymentComponents [GitHub](https://github.com/Payment-Components/demo-iso20022#more-features-are-included-in-the-paid-version-like)._
 
 ```java
-//For non RTGS Messages(pain.001.001.09)        
-CustomerCreditTransferInitiation09 customerCreditTransferInitiation = new CustomerCreditTransferInitiation09();
-customerCreditTransferInitiation.parseXML(xml);
+//For non RTGS Messages(pacs.008.001.08)
+FinancialInstitutionCreditTransfer08 financialInstitutionCreditTransfer08 = new FinancialInstitutionCreditTransfer08();
+financialInstitutionCreditTransfer08.parseXML(xml);
 
 //For RTGS Messages(pacs.008.001.08)
-RtgsMessage rtgsMessage = new RtgsMessage(new BusinessApplicationHeader02(), new FIToFICustomerCreditTransfer08());
-rtgsMessage.parseXml(xml);
-BusinessApplicationHeader02 businessApplicationHeader02 = (BusinessApplicationHeader02) rtgsMessage.getAppHdr(); 
-FIToFICustomerCreditTransfer08 fiToFICustomerCreditTransfer = (FIToFICustomerCreditTransfer08) rtgsMessage.getDocument();
-
-//In case you want to enclose the RTGS message under another Root Element, use the code below
-rtgsMessage.encloseCbprMessage("RequestPayload"); //In case you want RequestPayload
+FinancialInstitutionCreditTransfer08Rtgs financialInstitutionCreditTransfer08Rtgs = new FinancialInstitutionCreditTransfer08Rtgs();
+financialInstitutionCreditTransfer08Rtgs.parseXML(xml);
 ```
 
 In order to create an MT Java Object use the below code.

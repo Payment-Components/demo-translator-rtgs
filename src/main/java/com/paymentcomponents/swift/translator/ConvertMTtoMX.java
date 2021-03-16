@@ -31,16 +31,22 @@ public class ConvertMTtoMX {
         }
     }
 
-    private static final String validMtMessage = "{1:F01TESTBICYXXXX1111111111}{2:O2000139210201TESTBICZXXXX11111111112102010139N}{3:{121:00000000-0000-4000-8000-000000000000}}{4:\n" +
+    private static final String validMtMessage = "{1:F01BBBBUS33XXXX1111111111}{2:O2020726210316CCCCJPJTXXXX11111111112103160726N}{3:{121:00000000-0000-4000-8000-000000000000}}{4:\n" +
             ":20:BBBB/120928-FICT\n" +
+            ":21:ABC/4562/2012-09\n" +
+            ":13C:/RNCTIME/0400+1300\n" +
+            ":13C:/FROTIME/0112+1300\n" +
+            ":13C:/TILTIME/1212+1300\n" +
             ":32A:120929JPY10000000,\n" +
-            ":53B:/ACCOUNTID\n" +
+            ":52A:/DBTRACCT\n" +
+            "BBBBUS33XXX\n" +
             ":56A:/INTERAGTACCT\n" +
-            "INTERBIC\n" +
+            "INTERBICXXX\n" +
             ":57A:/CDTRAGTACCT\n" +
-            "AAAAJPJT\n" +
-            ":72:/CLSTIME/1212+1300\n" +
-            "/INS/TESTBICD\n" +
+            "AAAAJPJTXXX\n" +
+            ":58A:/CDTRACCT\n" +
+            "AAAAGB2LXXX\n" +
+            ":72:/INS/TESTBICDXXX\n" +
             "-}";
 
 }
