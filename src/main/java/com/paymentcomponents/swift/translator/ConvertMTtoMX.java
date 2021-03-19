@@ -1,8 +1,8 @@
 package com.paymentcomponents.swift.translator;
 
-import gr.datamation.swift.translator.Converter;
-import gr.datamation.swift.translator.exceptions.InvalidMtMessageException;
-import gr.datamation.swift.translator.exceptions.InvalidMxMessageException;
+import gr.datamation.swift.translator.rtgs.Converter;
+import gr.datamation.swift.translator.rtgs.exceptions.InvalidMtMessageException;
+import gr.datamation.swift.translator.rtgs.exceptions.InvalidMxMessageException;
 
 public class ConvertMTtoMX {
 
