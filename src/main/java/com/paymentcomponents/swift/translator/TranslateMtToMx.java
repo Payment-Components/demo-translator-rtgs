@@ -12,12 +12,12 @@ import gr.datamation.swift.translator.rtgs.utils.MessageValidationUtils;
 public class TranslateMtToMx {
 
     public static void main(String... args) {
-        translateMt200ToPacs009_Auto();
-        translateMt200ToPacs009_ExplicitText();
-        translateMt200ToPacs009_ExplicitObject();
+        translateMt202ToPacs009_Auto();
+        translateMt202ToPacs009_ExplicitText();
+        translateMt202ToPacs009_ExplicitObject();
     }
 
-    public static void translateMt200ToPacs009_Auto() {
+    public static void translateMt202ToPacs009_Auto() {
         try {
             // You have the option to provide the MT message in text format and get back the RTGS message in text format.
             // Translator auto detects the translation mapping.
@@ -36,7 +36,7 @@ public class TranslateMtToMx {
         }
     }
 
-    public static void translateMt200ToPacs009_ExplicitText() {
+    public static void translateMt202ToPacs009_ExplicitText() {
         try {
             // If you do not want to use the auto-translation functionality, you have the option to provide the MT message
             // in text format and get back the RTGS message in text format. In this case you need to know the exact translation mapping.
@@ -56,7 +56,7 @@ public class TranslateMtToMx {
         }
     }
 
-    public static void translateMt200ToPacs009_ExplicitObject() {
+    public static void translateMt202ToPacs009_ExplicitObject() {
         try {
             // If you do not want to use the auto-translation functionality, you have the option to provide the MT message
             // in Object format and get back the RTGS message in Object format. In this case you need to know the exact translation mapping.

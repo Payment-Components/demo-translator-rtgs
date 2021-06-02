@@ -10,7 +10,7 @@ and vice versa according to RTGS guidelines.
 It's a simple maven project, you can download it and run it, with Java 1.8 or above.
 
 ## SDK setup
-Incorporate the SDK [jar](https://nexus.paymentcomponents.com/repository/public/gr/datamation/translator-rtgs/1.2.2/translator-rtgs-1.2.2-demo.jar)
+Incorporate the SDK [jar](https://nexus.paymentcomponents.com/repository/public/gr/datamation/translator-rtgs/1.2.3/translator-rtgs-1.2.3-demo.jar)
 into your project by the regular IDE means.  
 This process will vary depending upon your specific IDE and you should consult your documentation on how to deploy a bean.  
 For example in Intellij all that needs to be done is to import the jar files into a project. Alternatively, you can import it as a Maven or Gradle dependency.
@@ -30,7 +30,7 @@ Import the SDK
 <dependency>
     <groupId>gr.datamation</groupId>
     <artifactId>translator-rtgs</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
     <classifier>demo</classifier>
 </dependency>
 ```
@@ -48,31 +48,31 @@ repositories {
 
 Import the SDK
 ```groovy
-implementation 'gr.datamation:translator-rtgs:1.2.2:demo@jar'
+implementation 'gr.datamation:translator-rtgs:1.2.3:demo@jar'
 ```
 
 ## Supported MT > MX Translations
 
-| MT message    | MX message          | Translator Class     |
-| ----------    | ----------          | ----------------     |
-| MT103         | pacs.008.001.08     | Mt103ToPacs008       |
-| MT103(Return) | pacs.004.001.09     | Mt103ToPacs004       |
-| MT202         | pacs.009.001.08     | Mt202ToPacs009       |
-| MT202COV      | pacs.009.001.08.cov | Mt202ToPacs009       |
-| MT202(Return) | pacs.004.001.09     | Mt202ToPacs004       |
+| MT message    | MX message      | Translator Class     | Available in Demo |
+| ----------    | ----------      | ----------------     | :---------------: |
+| MT103         | pacs.008.001.08 | Mt103ToPacs008       |                   |
+| MT103(Return) | pacs.004.001.09 | Mt103ToPacs004       |                   |
+| MT202         | pacs.009.001.08 | Mt202ToPacs009       | &check;           |
+| MT202COV      | pacs.009.001.08 | Mt202ToPacs009       |                   |
+| MT202(Return) | pacs.004.001.09 | Mt202ToPacs004       |                   |
 
 ## Supported MX > MT Translations
 
-| MT message          | MX message     | Translator Class     | Multiple MT support |
-| ----------          | ----------     | ----------------     | :-----------------: |
-| camt.053.001.08     | MT940          | Camt053ToMt940       | &check;             |
-| camt.054.001.08     | MT900          | Camt054ToMt900       | &cross;             |
-| camt.054.001.08     | MT910          | Camt054ToMt910       | &cross;             |
-| pacs.004.001.09     | MT103 (Return) | Pacs004ToMt103       | &cross;             |
-| pacs.004.001.09     | MT202 (Return) | Pacs004ToMt202       | &cross;             |
-| pacs.008.001.08     | MT103          | Pacs008ToMt103       | &cross;             |
-| pacs.009.001.08     | MT202          | Pacs009ToMt202       | &cross;             |
-| pacs.009.001.08     | MT202COV       | Pacs009ToMt202COV    | &cross;             |
+| MT message          | MX message     | Translator Class     | Multiple MT support | Available in Demo |
+| ----------          | ----------     | ----------------     | :-----------------: | :---------------: |
+| camt.053.001.08     | MT940          | Camt053ToMt940       | &check;             |                   |
+| camt.054.001.08     | MT900          | Camt054ToMt900       | &cross;             |                   |
+| camt.054.001.08     | MT910          | Camt054ToMt910       | &cross;             |                   |
+| pacs.004.001.09     | MT103 (Return) | Pacs004ToMt103       | &cross;             |                   |
+| pacs.004.001.09     | MT202 (Return) | Pacs004ToMt202       | &cross;             |                   |
+| pacs.008.001.08     | MT103          | Pacs008ToMt103       | &cross;             |                   |
+| pacs.009.001.08     | MT202          | Pacs009ToMt202       | &cross;             | &check;           |
+| pacs.009.001.08     | MT202COV       | Pacs009ToMt202COV    | &cross;             |                   |
 
 ## Instructions
 
