@@ -8,7 +8,7 @@ import gr.datamation.swift.translator.common.exceptions.InvalidMxMessageExceptio
 import gr.datamation.swift.translator.rtgs.RtgsTranslator;
 import gr.datamation.swift.translator.rtgs.interfaces.MxToMtTranslator;
 import gr.datamation.swift.translator.rtgs.translators.mx.Pacs009ToMt202;
-import gr.datamation.swift.translator.rtgs.utils.MessageValidationUtils;
+import gr.datamation.swift.translator.rtgs.utils.RtgsMessageValidationUtils;
 
 public class TranslateMxToMt {
 
@@ -62,7 +62,7 @@ public class TranslateMxToMt {
             // If you do not want to use the auto-translation functionality, you have the option to provide the RTGS message
             // in Object format and get back the MT message in Object format. In this case you need to know the exact translation mapping.
             // In order to handle MT and RTGS messages, advice README.md
-            CoreMessage coreMessage = MessageValidationUtils.autoParseAndValidateRtgsMessage(validMXMessage);
+            CoreMessage coreMessage = RtgsMessageValidationUtils.autoParseAndValidateRtgsMessage(validMXMessage);
             MxToMtTranslator mxToMtTranslator = new Pacs009ToMt202();
             SwiftMessage mtMessage = mxToMtTranslator.translate(coreMessage);
             System.out.println("Translated Message is: " + new SwiftMsgProcessor().BuildMsgStringFromObject(mtMessage));
