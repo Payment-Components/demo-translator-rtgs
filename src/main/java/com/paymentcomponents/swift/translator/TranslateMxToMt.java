@@ -1,6 +1,7 @@
 package com.paymentcomponents.swift.translator;
 
 import gr.datamation.mx.CoreMessage;
+import gr.datamation.mx.message.pacs.rtgs.FinancialInstitutionCreditTransfer08Rtgs;
 import gr.datamation.swift.common.SwiftMessage;
 import gr.datamation.swift.processor.SwiftMsgProcessor;
 import gr.datamation.swift.translator.common.exceptions.InvalidMtMessageException;
@@ -62,7 +63,8 @@ public class TranslateMxToMt {
             // If you do not want to use the auto-translation functionality, you have the option to provide the RTGS message
             // in Object format and get back the MT message in Object format. In this case you need to know the exact translation mapping.
             // In order to handle MT and RTGS messages, advice README.md
-            CoreMessage coreMessage = RtgsMessageValidationUtils.autoParseAndValidateRtgsMessage(validMXMessage);
+            CoreMessage coreMessage = RtgsMessageValidationUtils.parseAndValidateRtgsMessage(validMXMessage, FinancialInstitutionCreditTransfer08Rtgs.class);
+            //or RtgsMessageValidationUtils.autoParseAndValidateRtgsMessage(validMXMessage);
             MxToMtTranslator mxToMtTranslator = new Pacs009ToMt202();
             SwiftMessage mtMessage = mxToMtTranslator.translate(coreMessage);
             System.out.println("Translated Message is: " + new SwiftMsgProcessor().BuildMsgStringFromObject(mtMessage));
