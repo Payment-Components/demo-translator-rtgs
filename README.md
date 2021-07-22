@@ -34,6 +34,15 @@ Import the SDK
     <classifier>demo</classifier>
 </dependency>
 ```
+You may need to exclude groovy if you face problems during runtime or tests
+```xml
+<exclusions>
+    <exclusion>
+        <groupId>org.codehaus.groovy</groupId>
+        <artifactId>groovy-all</artifactId>
+    </exclusion>
+</exclusions>
+```
 
 ### Gradle 
 
