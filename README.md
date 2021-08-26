@@ -112,9 +112,9 @@ CoreMessage translate(SwiftMessage swiftMtMessage) throws Exception;
 
 `MxToMtTranslator` interface provides the following methods.
 ```java
-String translate(String mxMessageText)throws Exception;
-SwiftMessage translate(CoreMessage coreMessage)throws Exception;
-SwiftMessage[]translateMultipleMt(CoreMessage coreMessage)throws Exception;
+String translate(String mxMessageText) throws Exception;
+SwiftMessage translate(CoreMessage coreMessage) throws Exception;
+SwiftMessage[] translateMultipleMt(CoreMessage coreMessage) throws Exception;
 ```
 
 The method `translateMultipleMt` translates an RTGS message to multiple MT messages.  
