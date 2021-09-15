@@ -65,6 +65,7 @@ implementation 'gr.datamation:translator-rtgs:3.2.1:demo@jar'
 | MT message    | MX message      | Translator Class     | Available in Demo |
 | ----------    | ----------      | ----------------     | :---------------: |
 | MT103         | pacs.008.001.08 | Mt103ToPacs008       |                   |
+| MT103+        | pacs.008.001.08 | Mt103ToPacs008       |                   |
 | MT103(Return) | pacs.004.001.09 | Mt103ToPacs004       |                   |
 | MT202         | pacs.009.001.08 | Mt202ToPacs009       | &check;           |
 | MT202COV      | pacs.009.001.08 | Mt202ToPacs009       |                   |
