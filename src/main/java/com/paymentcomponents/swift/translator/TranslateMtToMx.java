@@ -1,6 +1,6 @@
 package com.paymentcomponents.swift.translator;
 
-import gr.datamation.mx.CoreMessage;
+import gr.datamation.mx.message.pacs.rtgs.FinancialInstitutionCreditTransfer08Rtgs;
 import gr.datamation.swift.common.SwiftMessage;
 import gr.datamation.swift.translator.common.exceptions.InvalidMtMessageException;
 import gr.datamation.swift.translator.common.exceptions.InvalidMxMessageException;
@@ -41,7 +41,7 @@ public class TranslateMtToMx {
             // If you do not want to use the auto-translation functionality, you have the option to provide the MT message
             // in text format and get back the RTGS message in text format. In this case you need to know the exact translation mapping.
             // In order to handle MT and RTGS messages, advice README.md
-            MtToMxTranslator mtToMxTranslator = new Mt202ToPacs009();
+            MtToMxTranslator<?> mtToMxTranslator = new Mt202ToPacs009();
             String mxMessage = mtToMxTranslator.translate(validMtMessage);
             System.out.println("Translated Message is: \n" + mxMessage);
         } catch (InvalidMxMessageException e) {
@@ -62,8 +62,8 @@ public class TranslateMtToMx {
             // in Object format and get back the RTGS message in Object format. In this case you need to know the exact translation mapping.
             // In order to handle MT and RTGS messages, advice README.md
             SwiftMessage swiftMessage = MtMessageValidationUtils.parseMtMessage(validMtMessage);
-            MtToMxTranslator mtToMxTranslator = new Mt202ToPacs009();
-            CoreMessage mxMessage = mtToMxTranslator.translate(swiftMessage);
+            MtToMxTranslator<FinancialInstitutionCreditTransfer08Rtgs> mtToMxTranslator = new Mt202ToPacs009();
+            FinancialInstitutionCreditTransfer08Rtgs mxMessage = mtToMxTranslator.translate(swiftMessage);
             System.out.println("Translated Message is: \n" + mxMessage.convertToXML());
         } catch (InvalidMxMessageException e) {
             System.out.println("The following errors occurred");
