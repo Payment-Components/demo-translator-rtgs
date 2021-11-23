@@ -30,7 +30,7 @@ Import the SDK
 <dependency>
     <groupId>gr.datamation</groupId>
     <artifactId>translator-rtgs</artifactId>
-    <version>3.4.1</version>
+    <version>3.4.2</version>
     <classifier>demo</classifier>
 </dependency>
 ```
