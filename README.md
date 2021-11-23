@@ -1,11 +1,11 @@
-# SWIFT Message Translator RTGS Demo
+# SWIFT Message Translator Target2 (RTGS) Demo
 
-The project is here to demonstrate how our [SDK](https://www.paymentcomponents.com/messaging-libraries/) for RTGS
+The project is here to demonstrate how our [SDK](https://www.paymentcomponents.com/messaging-libraries/) for Target2 (RTGS)
 Message Translator works. For our demonstration we are going to use the demo SDK which can translate SWIFT MT to CBPR+ messages. 
 
-This documentation describes how to incorporate the RTGS Translator Library into your project. The SDK is written in Java.  
-By following this guide you will be able to translate SWIFT MT(ISO 15022) messages to RTGS messages 
-and vice versa according to RTGS guidelines.
+This documentation describes how to incorporate the Target2 (RTGS) Translator Library into your project. The SDK is written in Java.  
+By following this guide you will be able to translate SWIFT MT(ISO 15022) messages to Target2 (RTGS) messages 
+and vice versa according to Target2 (RTGS) guidelines.
 
 It's a simple maven project, you can download it and run it, with Java 1.8 or above.
 
@@ -88,7 +88,7 @@ implementation 'gr.datamation:translator-rtgs:3.4.1:demo@jar'
 
 ### Auto Translation
 
-You have the option to provide the MT or RTGS message and the library auto translates it to its equivalent.  
+You have the option to provide the MT or Target2 (RTGS) message and the library auto translates it to its equivalent.  
 Both input and output are in text format.  
 You need to call the following static methods of `RtgsTranslator` class.  
 In case of no error, you will get the formatted translated message.
