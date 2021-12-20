@@ -10,7 +10,7 @@ and vice versa according to Target2 (RTGS) guidelines.
 It's a simple maven project, you can download it and run it, with Java 1.8 or above.
 
 ## SDK setup
-Incorporate the SDK [jar](https://nexus.paymentcomponents.com/repository/public/gr/datamation/translator-rtgs/3.4.1/translator-rtgs-3.4.1-demo.jar)
+Incorporate the SDK [jar](https://nexus.paymentcomponents.com/repository/public/gr/datamation/translator-rtgs/3.5.1/translator-rtgs-3.5.1-demo.jar)
 into your project by the regular IDE means.  
 This process will vary depending upon your specific IDE and you should consult your documentation on how to deploy a bean.  
 For example in Intellij all that needs to be done is to import the jar files into a project. Alternatively, you can import it as a Maven or Gradle dependency.
@@ -30,18 +30,31 @@ Import the SDK
 <dependency>
     <groupId>gr.datamation</groupId>
     <artifactId>translator-rtgs</artifactId>
-    <version>3.4.2</version>
+    <version>3.5.1</version>
     <classifier>demo</classifier>
 </dependency>
 ```
-You may need to exclude groovy if you face problems during runtime or tests
+Import additional dependencies if not included in your project
 ```xml
-<exclusions>
-    <exclusion>
-        <groupId>org.codehaus.groovy</groupId>
-        <artifactId>groovy-all</artifactId>
-    </exclusion>
-</exclusions>
+<dependency>
+    <groupId>org.codehaus.groovy</groupId>
+    <artifactId>groovy-all</artifactId>
+    <version>2.5.11</version>
+    <scope>compile</scope>
+    <type>pom</type>
+</dependency>
+
+<dependency>
+    <groupId>javax.xml.bind</groupId>
+    <artifactId>jaxb-api</artifactId>
+    <version>2.3.1</version>
+</dependency>
+
+<dependency>
+    <groupId>org.glassfish.jaxb</groupId>
+    <artifactId>jaxb-runtime</artifactId>
+    <version>2.3.1</version>
+</dependency>
 ```
 
 ### Gradle 
@@ -57,7 +70,14 @@ repositories {
 
 Import the SDK
 ```groovy
-implementation 'gr.datamation:translator-rtgs:3.4.1:demo@jar'
+implementation 'gr.datamation:translator-rtgs:3.5.1:demo@jar'
+```
+
+Import additional dependencies if not included in your project
+```groovy
+implementation group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.11', ext: 'pom'
+implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.1'
 ```
 
 ## Supported MT > MX Translations
