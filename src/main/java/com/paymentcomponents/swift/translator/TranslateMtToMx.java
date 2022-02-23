@@ -8,6 +8,7 @@ import gr.datamation.swift.translator.common.utils.MtMessageValidationUtils;
 import gr.datamation.swift.translator.rtgs.RtgsTranslator;
 import gr.datamation.swift.translator.rtgs.interfaces.MtToMxTranslator;
 import gr.datamation.swift.translator.rtgs.translators.mt.Mt202ToPacs009;
+import gr.datamation.swift.translator.rtgs.utils.RtgsMessageValidationUtils;
 
 public class TranslateMtToMx {
 
@@ -23,6 +24,8 @@ public class TranslateMtToMx {
             // Translator auto detects the translation mapping.
             // In order to handle MT and RTGS messages, advice README.md
             String mxMessage = RtgsTranslator.translateMtToMx(validMtMessage);
+            //Validate the Translated message
+            RtgsMessageValidationUtils.autoParseAndValidateRtgsMessage(mxMessage);
             System.out.println("Translated Message is: \n" + mxMessage);
         } catch (InvalidMxMessageException e) {
             System.out.println("The following errors occurred");
@@ -43,6 +46,8 @@ public class TranslateMtToMx {
             // In order to handle MT and RTGS messages, advice README.md
             MtToMxTranslator<?> mtToMxTranslator = new Mt202ToPacs009();
             String mxMessage = mtToMxTranslator.translate(validMtMessage);
+            //Validate the Translated message
+            RtgsMessageValidationUtils.autoParseAndValidateRtgsMessage(mxMessage);
             System.out.println("Translated Message is: \n" + mxMessage);
         } catch (InvalidMxMessageException e) {
             System.out.println("The following errors occurred");
@@ -64,6 +69,8 @@ public class TranslateMtToMx {
             SwiftMessage swiftMessage = MtMessageValidationUtils.parseMtMessage(validMtMessage);
             MtToMxTranslator<FinancialInstitutionCreditTransfer08Rtgs> mtToMxTranslator = new Mt202ToPacs009();
             FinancialInstitutionCreditTransfer08Rtgs mxMessage = mtToMxTranslator.translate(swiftMessage);
+            //Validate the Translated message
+            RtgsMessageValidationUtils.validateRtgsMessage(mxMessage);
             System.out.println("Translated Message is: \n" + mxMessage.convertToXML());
         } catch (InvalidMxMessageException e) {
             System.out.println("The following errors occurred");
