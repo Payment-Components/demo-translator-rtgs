@@ -24,7 +24,7 @@ public class TranslateMxToMt {
             // Translator auto detects the translation mapping.
             // In order to handle MT and RTGS messages, advice README.md
             String mtMessage = RtgsTranslator.translateMxToMt(validMXMessage);
-            System.out.println("Translated Message is: " + mtMessage);
+            System.out.println("Translated Message is: \n" + mtMessage);
         } catch (InvalidMxMessageException e) {
             System.out.println("The following errors occurred");
             e.getValidationErrorList().forEach(System.out::println);
@@ -44,7 +44,7 @@ public class TranslateMxToMt {
             // In order to handle MT and RTGS messages, advice README.md
             MxToMtTranslator<?> mxToMtTranslator = new Pacs009ToMt202();
             String mtMessage = mxToMtTranslator.translate(validMXMessage);
-            System.out.println("Translated Message is: " + mtMessage);
+            System.out.println("Translated Message is: \n" + mtMessage);
         } catch (InvalidMxMessageException e) {
             System.out.println("The following errors occurred");
             e.getValidationErrorList().forEach(System.out::println);
@@ -66,7 +66,7 @@ public class TranslateMxToMt {
             //or RtgsMessageValidationUtils.autoParseAndValidateRtgsMessage(validMXMessage);
             MxToMtTranslator<FinancialInstitutionCreditTransfer08Rtgs> mxToMtTranslator = new Pacs009ToMt202();
             SwiftMessage mtMessage = mxToMtTranslator.translate(coreMessage);
-            System.out.println("Translated Message is: " + new SwiftMsgProcessor().BuildMsgStringFromObject(mtMessage));
+            System.out.println("Translated Message is: \n" + new SwiftMsgProcessor().BuildMsgStringFromObject(mtMessage));
         } catch (InvalidMxMessageException e) {
             System.out.println("The following errors occurred");
             e.getValidationErrorList().forEach(System.out::println);

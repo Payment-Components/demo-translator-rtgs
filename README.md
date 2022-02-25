@@ -10,7 +10,7 @@ and vice versa according to Target2 (RTGS) guidelines.
 It's a simple maven project, you can download it and run it, with Java 1.8 or above.
 
 ## SDK setup
-Incorporate the SDK [jar](https://nexus.paymentcomponents.com/repository/public/gr/datamation/translator-rtgs/3.6.0/translator-rtgs-3.6.0-demo.jar)
+Incorporate the SDK [jar](https://nexus.paymentcomponents.com/repository/public/gr/datamation/translator-rtgs/3.11.0/translator-rtgs-3.11.0-demo.jar)
 into your project by the regular IDE means.  
 This process will vary depending upon your specific IDE and you should consult your documentation on how to deploy a bean.  
 For example in Intellij all that needs to be done is to import the jar files into a project. Alternatively, you can import it as a Maven or Gradle dependency.
@@ -30,7 +30,7 @@ Import the SDK
 <dependency>
     <groupId>gr.datamation</groupId>
     <artifactId>translator-rtgs</artifactId>
-    <version>3.6.0</version>
+    <version>3.11.0</version>
     <classifier>demo</classifier>
 </dependency>
 ```
@@ -70,7 +70,7 @@ repositories {
 
 Import the SDK
 ```groovy
-implementation 'gr.datamation:translator-rtgs:3.6.0:demo@jar'
+implementation 'gr.datamation:translator-rtgs:3.11.0:demo@jar'
 ```
 
 Import additional dependencies if not included in your project
@@ -111,7 +111,9 @@ implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.
 You have the option to provide the MT or Target2 (RTGS) message and the library auto translates it to its equivalent.  
 Both input and output are in text format.  
 You need to call the following static methods of `RtgsTranslator` class.  
-In case of no error, you will get the formatted translated message.
+In case of no error of the input message, you will get the formatted translated message.  
+When MT message is used as input it is not validated.  
+Translated message is not validated.  
 ```java
 public static String translateMtToMx(String mtMessage) throws InvalidMxMessageException, InvalidMtMessageException
 ```
@@ -123,7 +125,10 @@ public static String translateMxToMt(String mxMessage) throws InvalidMxMessageEx
 
 If you do not want to use the auto-translation functionality, you can call directly the Translator you want.  
 In this case you need to know the exact translation mapping.  
-Translator classes implement the `MtToMxTranslator` or `MxToMtTranslator` interface.
+Translator classes implement the `MtToMxTranslator` or `MxToMtTranslator` interface.  
+The `translate(Object)`, does not validate the message.  
+The `translate(String)`, validates the message only in case of MX as input.  
+Translated message is not validated.  
 
 `MtToMxTranslator` interface provides the following methods for both text and object format translations.
 ```java
@@ -149,10 +154,12 @@ For example:
 
 ### Error Handling
 
-When we translate a message, both input and output messages are validated. For example, in a MT→MX translation, the
-first step is to validate the MT message and we proceed to translation only if the message is valid.  
-This is the reason why both methods throw `InvalidMtMessageException` and `InvalidMxMessageException`.  
-Both Exceptions contain a `validationErrorList` attribute which contains a description of the error occurred.
+When we translate a message, input message is validated(MT is excluded). For example, in a MX→MT translation, the
+first step is to validate the MX message and we proceed to translation only if the message is valid.  
+This is the reason why it throws `InvalidMxMessageException`.  
+Exception contains a `validationErrorList` attribute which contains a description of the error occurred.  
+In order to validate the translated MX message, you can use `RtgsMessageValidationUtils.validateRtgsMessage(T message)`, 
+`RtgsMessageValidationUtils.autoParseAndValidateRtgsMessage(String messageText)` or any other way you prefer.
 
 ### Modify the generated message
 

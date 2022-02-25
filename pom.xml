@@ -20,7 +20,7 @@
         <dependency>
             <groupId>gr.datamation</groupId>
             <artifactId>translator-rtgs</artifactId>
-            <version>3.6.0</version>
+            <version>3.11.0</version>
             <classifier>demo</classifier>
         </dependency>
 
