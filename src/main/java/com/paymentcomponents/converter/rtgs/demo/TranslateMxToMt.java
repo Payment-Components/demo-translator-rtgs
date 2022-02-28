@@ -1,14 +1,14 @@
-package com.paymentcomponents.swift.translator;
+package com.paymentcomponents.converter.rtgs.demo;
 
+import gr.datamation.converter.common.exceptions.InvalidMtMessageException;
+import gr.datamation.converter.common.exceptions.InvalidMxMessageException;
+import gr.datamation.converter.rtgs.RtgsTranslator;
+import gr.datamation.converter.rtgs.converters.mx.Pacs009ToMt202;
+import gr.datamation.converter.rtgs.interfaces.MxToMtTranslator;
+import gr.datamation.converter.rtgs.utils.RtgsMessageValidationUtils;
+import gr.datamation.mt.common.SwiftMessage;
+import gr.datamation.mt.processor.SwiftMsgProcessor;
 import gr.datamation.mx.message.pacs.rtgs.FinancialInstitutionCreditTransfer08Rtgs;
-import gr.datamation.swift.common.SwiftMessage;
-import gr.datamation.swift.processor.SwiftMsgProcessor;
-import gr.datamation.swift.translator.common.exceptions.InvalidMtMessageException;
-import gr.datamation.swift.translator.common.exceptions.InvalidMxMessageException;
-import gr.datamation.swift.translator.rtgs.RtgsTranslator;
-import gr.datamation.swift.translator.rtgs.interfaces.MxToMtTranslator;
-import gr.datamation.swift.translator.rtgs.translators.mx.Pacs009ToMt202;
-import gr.datamation.swift.translator.rtgs.utils.RtgsMessageValidationUtils;
 
 public class TranslateMxToMt {
 
