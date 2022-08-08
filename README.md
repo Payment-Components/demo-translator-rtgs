@@ -10,7 +10,7 @@ and vice versa according to Target2 (RTGS) guidelines.
 It's a simple maven project, you can download it and run it, with Java 1.8 or above.
 
 ## SDK setup
-Incorporate the SDK [jar](https://nexus.paymentcomponents.com/repository/public/gr/datamation/translator-rtgs/3.34.1/translator-rtgs-3.34.1-demo.jar)
+Incorporate the SDK [jar](https://nexus.paymentcomponents.com/repository/public/gr/datamation/translator-rtgs/3.37.0/translator-rtgs-3.37.0-demo.jar)
 into your project by the regular IDE means.  
 This process will vary depending upon your specific IDE and you should consult your documentation on how to deploy a bean.  
 For example in Intellij all that needs to be done is to import the jar files into a project. Alternatively, you can import it as a Maven or Gradle dependency.
@@ -30,7 +30,7 @@ Import the SDK
 <dependency>
     <groupId>gr.datamation</groupId>
     <artifactId>translator-rtgs</artifactId>
-    <version>3.34.1</version>
+    <version>3.37.0</version>
     <classifier>demo</classifier>
 </dependency>
 ```
@@ -70,7 +70,7 @@ repositories {
 
 Import the SDK
 ```groovy
-implementation 'gr.datamation:translator-rtgs:3.34.1:demo@jar'
+implementation 'gr.datamation:translator-rtgs:3.37.0:demo@jar'
 ```
 
 Import additional dependencies if not included in your project
@@ -82,27 +82,33 @@ implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.
 
 ## Supported MT > MX Translations
 
-| MT message    | MX message      | Translator Class     | Available in Demo |
-| ----------    | ----------      | ----------------     | :---------------: |
-| MT103         | pacs.008.001.08 | Mt103ToPacs008       |                   |
-| MT103+        | pacs.008.001.08 | Mt103ToPacs008       |                   |
-| MT103(Return) | pacs.004.001.09 | Mt103ToPacs004       |                   |
-| MT202         | pacs.009.001.08 | Mt202ToPacs009       | &check;           |
-| MT202COV      | pacs.009.001.08 | Mt202ToPacs009       |                   |
-| MT202(Return) | pacs.004.001.09 | Mt202ToPacs004       |                   |
+| MT message    | MX message      | Translator Class | Multiple MTX support | Available in Demo |
+|---------------|-----------------|------------------|:--------------------:|:-----------------:|
+| MT103         | pacs.008.001.08 | Mt103ToPacs008   |       &cross;        |                   |
+| MT103+        | pacs.008.001.08 | Mt103ToPacs008   |       &cross;        |                   |
+| MT103(Return) | pacs.004.001.09 | Mt103ToPacs004   |       &cross;        |                   |
+| MT202         | pacs.009.001.08 | Mt202ToPacs009   |       &cross;        |      &check;      |
+| MT202COV      | pacs.009.001.08 | Mt202ToPacs009   |       &cross;        |                   |
+| MT202(Return) | pacs.004.001.09 | Mt202ToPacs004   |       &cross;        |                   |
+| MT204         | pacs.010.001.03 | Mt204ToPacs010   |       &check;        |                   |
+
+_* Multiple MX are splitted in text by an empty line_
 
 ## Supported MX > MT Translations
 
-| MT message          | MX message     | Translator Class     | Multiple MT support | Available in Demo |
-| ----------          | ----------     | ----------------     | :-----------------: | :---------------: |
-| camt.053.001.08     | MT940          | Camt053ToMt940       | &check;             |                   |
-| camt.054.001.08     | MT900          | Camt054ToMt900       | &cross;             |                   |
-| camt.054.001.08     | MT910          | Camt054ToMt910       | &cross;             |                   |
-| pacs.004.001.09     | MT103 (Return) | Pacs004ToMt103       | &cross;             |                   |
-| pacs.004.001.09     | MT202 (Return) | Pacs004ToMt202       | &cross;             |                   |
-| pacs.008.001.08     | MT103          | Pacs008ToMt103       | &cross;             |                   |
-| pacs.009.001.08     | MT202          | Pacs009ToMt202       | &cross;             | &check;           |
-| pacs.009.001.08     | MT202COV       | Pacs009ToMt202COV    | &cross;             |                   |
+| MT message      | MX message     | Translator Class  | Multiple MT support | Available in Demo |
+|-----------------|----------------|-------------------|:-------------------:|:-----------------:|
+| camt.053.001.08 | MT940          | Camt053ToMt940    |       &check;       |                   |
+| camt.054.001.08 | MT900          | Camt054ToMt900    |       &cross;       |                   |
+| camt.054.001.08 | MT910          | Camt054ToMt910    |       &cross;       |                   |
+| pacs.004.001.09 | MT103 (Return) | Pacs004ToMt103    |       &cross;       |                   |
+| pacs.004.001.09 | MT202 (Return) | Pacs004ToMt202    |       &cross;       |                   |
+| pacs.008.001.08 | MT103          | Pacs008ToMt103    |       &cross;       |                   |
+| pacs.009.001.08 | MT202          | Pacs009ToMt202    |       &cross;       |      &check;      |
+| pacs.009.001.08 | MT202COV       | Pacs009ToMt202COV |       &cross;       |                   |
+| pacs.010.001.03 | MT204          | Pacs010ToMt204    |       &cross;       |                   |
+| pacs.002.001.10 | MT012          | Pacs002ToMt012    |       &cross;       |                   |
+| pacs.002.001.10 | MT019          | Pacs002ToMt019    |       &cross;       |                   |
 
 ## Instructions
 
@@ -176,6 +182,43 @@ financialInstitutionCreditTransfer08Rtgs.parseXML(xml);
 In order to create an MT Java Object use the below code.
 ```java
 SwiftMessage swiftMessage = new SwiftMsgProcessor().ParseMsgStringToObject(translatedMessage);
+```
+
+### Notes for Pacs002 to MT012 and MT019
+#### Explicitly set values
+When you choose the Explicit Translation, you can set values that cannot be retrieved from pacs.002 before calling the translation.  
+For MT012:
+```java
+    Pacs002ToMt012 pacs002ToMt012 = new Pacs002ToMt012();
+    pacs002ToMt012.setTime("1037"); //Tag175
+    pacs002ToMt012.setMir("210610TESTBICAAXXX0945872653"); //Tag106
+    pacs002ToMt012.setMur("AAAA"); //Tag108
+    pacs002ToMt012.setSwiftAddress("TESTBICBXXXX"); //Tag102
+    pacs002ToMt012.setPaymentReleaseInformationSender("103723103723GR000RTGS331956001"); //Tag114
+    String mtMessage = pacs002ToMt012.translate(message);
+```
+For MT019:
+```java
+    Pacs002ToMt019 pacs002ToMt019 = new Pacs002ToMt019();
+    pacs002ToMt019.setTime("1037"); //Tag175
+    pacs002ToMt019.setMir("210610TESTBICAAXXX0945872653"); //Tag106
+    pacs002ToMt019.setMur("AAAA"); //Tag108
+    pacs002ToMt019.setSwiftAddress("TESTBICBXXXX"); //Tag102
+    pacs002ToMt019.setMor("103723103723GR000RTGS331956001"); //Tag107
+    String mtMessage = pacs002ToMt019.translate(message);
+```
+
+After translation is completed, we have a message with dummy values in for sender and receiver in Heade Blocks.  
+In order to set the correct values we call method `RtgsMx2MtUtils.fillHeaderBlocks()`.  
+If we have the BusinessApplicationHeader, we can call it like this:
+```java
+    //bah is an instance of BusinessApplicationHeader01Rtgs
+    RtgsMx2MtUtils.fillHeaderBlocks(bah, swiftMessage, "O", "012", null, null, null);
+```
+We can also call it without the header:
+```java
+    //bah is an instance of BusinessApplicationHeader01Rtgs
+    RtgsMx2MtUtils.fillHeaderBlocks(swiftMessage, "O", "012", "TESTBICZ", "TESTBICA", null, null, null, null)
 ```
 
 ### Code Samples
