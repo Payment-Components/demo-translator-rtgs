@@ -1,14 +1,15 @@
 package com.paymentcomponents.converter.rtgs.demo;
 
-import gr.datamation.converter.common.exceptions.InvalidMtMessageException;
 import gr.datamation.converter.common.exceptions.InvalidMxMessageException;
+import gr.datamation.converter.common.exceptions.StopTranslationException;
+import gr.datamation.converter.common.exceptions.TranslationUnhandledException;
+import gr.datamation.converter.common.utils.MxMessageValidationUtils;
 import gr.datamation.converter.rtgs.RtgsTranslator;
 import gr.datamation.converter.rtgs.converters.mx.Pacs009ToMt202;
-import gr.datamation.converter.rtgs.interfaces.MxToMtTranslator;
-import gr.datamation.converter.rtgs.utils.RtgsMessageValidationUtils;
+import gr.datamation.converter.rtgs.interfaces.Target2ToMtTranslator;
+import gr.datamation.iso20022.target2.pacs.FinancialInstitutionCreditTransfer08Rtgs;
 import gr.datamation.mt.common.SwiftMessage;
 import gr.datamation.mt.processor.SwiftMsgProcessor;
-import gr.datamation.mx.message.pacs.rtgs.FinancialInstitutionCreditTransfer08Rtgs;
 
 public class TranslateMxToMt {
 
@@ -19,63 +20,66 @@ public class TranslateMxToMt {
     }
 
     public static void translatePacs009toMt202_Auto() {
+        // You have the option to provide the RTGS message in text format and get back the MT message in text format.
+        // Translator auto detects the translation mapping.
+        // In order to handle MT and RTGS messages, advice README.md
         try {
-            // You have the option to provide the RTGS message in text format and get back the MT message in text format.
-            // Translator auto detects the translation mapping.
-            // In order to handle MT and RTGS messages, advice README.md
             String mtMessage = RtgsTranslator.translateMxToMt(validMXMessage);
             System.out.println("Translated Message is: \n" + mtMessage);
         } catch (InvalidMxMessageException e) {
-            System.out.println("The following errors occurred");
+            System.out.println("Target2 message is invalid");
             e.getValidationErrorList().forEach(System.out::println);
-        } catch (InvalidMtMessageException e) {
-            System.out.println("The following errors occurred");
-            e.getValidationErrorList().forEach(System.out::println);
-        } catch (Exception ex) {
+        } catch (StopTranslationException e) {
+            System.out.println("Translation errors occurred");
+            e.getTranslationErrorList().forEach(System.out::println);
+        } catch (TranslationUnhandledException e) {
             System.out.println("Unexpected error occurred");
-            System.err.println(ex.getMessage());
+            e.printStackTrace();
         }
     }
 
     public static void translatePacs009toMt202_ExplicitText() {
+        // If you do not want to use the auto-translation functionality, you have the option to provide the RTGS message
+        // in text format and get back the MT message in text format. In this case you need to know the exact translation mapping.
+        // In order to handle MT and RTGS messages, advice README.md
         try {
-            // If you do not want to use the auto-translation functionality, you have the option to provide the RTGS message
-            // in text format and get back the MT message in text format. In this case you need to know the exact translation mapping.
-            // In order to handle MT and RTGS messages, advice README.md
-            MxToMtTranslator<?> mxToMtTranslator = new Pacs009ToMt202();
+            Target2ToMtTranslator<?> mxToMtTranslator = new Pacs009ToMt202();
             String mtMessage = mxToMtTranslator.translate(validMXMessage);
             System.out.println("Translated Message is: \n" + mtMessage);
         } catch (InvalidMxMessageException e) {
-            System.out.println("The following errors occurred");
+            System.out.println("Target2 message is invalid");
             e.getValidationErrorList().forEach(System.out::println);
-        } catch (InvalidMtMessageException e) {
-            System.out.println("The following errors occurred");
-            e.getValidationErrorList().forEach(System.out::println);
-        } catch (Exception ex) {
+        } catch (StopTranslationException e) {
+            System.out.println("Translation errors occurred");
+            e.getTranslationErrorList().forEach(System.out::println);
+        } catch (TranslationUnhandledException e) {
             System.out.println("Unexpected error occurred");
-            System.err.println(ex.getMessage());
+            e.printStackTrace();
         }
     }
 
     public static void translatePacs009toMt202_ExplicitObject() {
+        // If you do not want to use the auto-translation functionality, you have the option to provide the RTGS message
+        // in Object format and get back the MT message in Object format. In this case you need to know the exact translation mapping.
+        // In order to handle MT and RTGS messages, advice README.md
         try {
-            // If you do not want to use the auto-translation functionality, you have the option to provide the RTGS message
-            // in Object format and get back the MT message in Object format. In this case you need to know the exact translation mapping.
-            // In order to handle MT and RTGS messages, advice README.md
-            FinancialInstitutionCreditTransfer08Rtgs coreMessage = RtgsMessageValidationUtils.parseAndValidateRtgsMessage(validMXMessage, FinancialInstitutionCreditTransfer08Rtgs.class);
+            FinancialInstitutionCreditTransfer08Rtgs coreMessage = MxMessageValidationUtils.parseAndValidateMxMessage(validMXMessage, FinancialInstitutionCreditTransfer08Rtgs.class);
             //or RtgsMessageValidationUtils.autoParseAndValidateRtgsMessage(validMXMessage);
-            MxToMtTranslator<FinancialInstitutionCreditTransfer08Rtgs> mxToMtTranslator = new Pacs009ToMt202();
+            Target2ToMtTranslator<FinancialInstitutionCreditTransfer08Rtgs> mxToMtTranslator = new Pacs009ToMt202();
             SwiftMessage mtMessage = mxToMtTranslator.translate(coreMessage);
             System.out.println("Translated Message is: \n" + new SwiftMsgProcessor().BuildMsgStringFromObject(mtMessage));
         } catch (InvalidMxMessageException e) {
-            System.out.println("The following errors occurred");
+            System.out.println("Target2 message is invalid");
             e.getValidationErrorList().forEach(System.out::println);
-        } catch (InvalidMtMessageException e) {
-            System.out.println("The following errors occurred");
-            e.getValidationErrorList().forEach(System.out::println);
-        } catch (Exception ex) {
+        } catch (StopTranslationException e) {
+            System.out.println("Translation errors occurred");
+            e.getTranslationErrorList().forEach(System.out::println);
+        } catch (TranslationUnhandledException e) {
             System.out.println("Unexpected error occurred");
-            System.err.println(ex.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("MT message is invalid");
+            e.printStackTrace();
         }
     }
 

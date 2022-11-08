@@ -2,13 +2,19 @@ package com.paymentcomponents.converter.rtgs.demo;
 
 import gr.datamation.converter.common.exceptions.InvalidMtMessageException;
 import gr.datamation.converter.common.exceptions.InvalidMxMessageException;
+import gr.datamation.converter.common.exceptions.StopTranslationException;
+import gr.datamation.converter.common.exceptions.TranslationUnhandledException;
 import gr.datamation.converter.common.utils.MtMessageValidationUtils;
+import gr.datamation.converter.common.utils.MxMessageValidationUtils;
 import gr.datamation.converter.rtgs.RtgsTranslator;
 import gr.datamation.converter.rtgs.converters.mt.Mt202ToPacs009;
-import gr.datamation.converter.rtgs.interfaces.MtToMxTranslator;
+import gr.datamation.converter.rtgs.interfaces.MtToTarget2Translator;
 import gr.datamation.converter.rtgs.utils.RtgsMessageValidationUtils;
+import gr.datamation.iso20022.target2.pacs.FinancialInstitutionCreditTransfer08Rtgs;
 import gr.datamation.mt.common.SwiftMessage;
-import gr.datamation.mx.message.pacs.rtgs.FinancialInstitutionCreditTransfer08Rtgs;
+
+import javax.xml.bind.JAXBException;
+import java.io.UnsupportedEncodingException;
 
 public class TranslateMtToMx {
 
@@ -19,68 +25,98 @@ public class TranslateMtToMx {
     }
 
     public static void translateMt202ToPacs009_Auto() {
+        // You have the option to provide the MT message in text format and get back the RTGS message in text format.
+        // Translator auto detects the translation mapping.
+        // In order to handle MT and RTGS messages, advice README.md
+        String mxMessage = null;
         try {
-            // You have the option to provide the MT message in text format and get back the RTGS message in text format.
-            // Translator auto detects the translation mapping.
-            // In order to handle MT and RTGS messages, advice README.md
-            String mxMessage = RtgsTranslator.translateMtToMx(validMtMessage);
-            //Validate the Translated message
+            mxMessage = RtgsTranslator.translateMtToMx(validMtMessage);
+        } catch (InvalidMtMessageException e) {
+            System.out.println("MT message is invalid");
+            e.getValidationErrorList().forEach(System.out::println);
+        } catch (StopTranslationException e) {
+            System.out.println("Translation errors occurred");
+            e.getTranslationErrorList().forEach(System.out::println);
+            return;
+        } catch (TranslationUnhandledException e) {
+            System.out.println("Unexpected error occurred");
+            e.printStackTrace();
+            return;
+        }
+
+        //Validate the Translated message
+        try {
             RtgsMessageValidationUtils.autoParseAndValidateRtgsMessage(mxMessage);
             System.out.println("Translated Message is: \n" + mxMessage);
         } catch (InvalidMxMessageException e) {
-            System.out.println("The following errors occurred");
+            System.out.println("Target2 message is invalid");
             e.getValidationErrorList().forEach(System.out::println);
-        } catch (InvalidMtMessageException e) {
-            System.out.println("The following errors occurred");
-            e.getValidationErrorList().forEach(System.out::println);
-        } catch (Exception ex) {
-            System.out.println("Unexpected error occurred");
-            System.err.println(ex.getMessage());
         }
     }
 
     public static void translateMt202ToPacs009_ExplicitText() {
+        // If you do not want to use the auto-translation functionality, you have the option to provide the MT message
+        // in text format and get back the RTGS message in text format. In this case you need to know the exact translation mapping.
+        // In order to handle MT and RTGS messages, advice README.md
+        String mxMessage = null;
         try {
-            // If you do not want to use the auto-translation functionality, you have the option to provide the MT message
-            // in text format and get back the RTGS message in text format. In this case you need to know the exact translation mapping.
-            // In order to handle MT and RTGS messages, advice README.md
-            MtToMxTranslator<?> mtToMxTranslator = new Mt202ToPacs009();
-            String mxMessage = mtToMxTranslator.translate(validMtMessage);
-            //Validate the Translated message
+            MtToTarget2Translator<?> mtToMxTranslator = new Mt202ToPacs009();
+            mxMessage = mtToMxTranslator.translate(validMtMessage);
+        } catch (InvalidMtMessageException e) {
+            System.out.println("MT message is invalid");
+            e.getValidationErrorList().forEach(System.out::println);
+        } catch (StopTranslationException e) {
+            System.out.println("Translation errors occurred");
+            e.getTranslationErrorList().forEach(System.out::println);
+            return;
+        } catch (TranslationUnhandledException e) {
+            System.out.println("Unexpected error occurred");
+            e.printStackTrace();
+            return;
+        }
+
+        //Validate the Translated message
+        try {
             RtgsMessageValidationUtils.autoParseAndValidateRtgsMessage(mxMessage);
             System.out.println("Translated Message is: \n" + mxMessage);
         } catch (InvalidMxMessageException e) {
-            System.out.println("The following errors occurred");
+            System.out.println("Target2 message is invalid");
             e.getValidationErrorList().forEach(System.out::println);
-        } catch (InvalidMtMessageException e) {
-            System.out.println("The following errors occurred");
-            e.getValidationErrorList().forEach(System.out::println);
-        } catch (Exception ex) {
-            System.out.println("Unexpected error occurred");
-            System.err.println(ex.getMessage());
         }
     }
 
     public static void translateMt202ToPacs009_ExplicitObject() {
+        // If you do not want to use the auto-translation functionality, you have the option to provide the MT message
+        // in Object format and get back the RTGS message in Object format. In this case you need to know the exact translation mapping.
+        // In order to handle MT and RTGS messages, advice README.md
+        FinancialInstitutionCreditTransfer08Rtgs mxMessage = null;
         try {
-            // If you do not want to use the auto-translation functionality, you have the option to provide the MT message
-            // in Object format and get back the RTGS message in Object format. In this case you need to know the exact translation mapping.
-            // In order to handle MT and RTGS messages, advice README.md
             SwiftMessage swiftMessage = MtMessageValidationUtils.parseMtMessage(validMtMessage);
-            MtToMxTranslator<FinancialInstitutionCreditTransfer08Rtgs> mtToMxTranslator = new Mt202ToPacs009();
-            FinancialInstitutionCreditTransfer08Rtgs mxMessage = mtToMxTranslator.translate(swiftMessage);
-            //Validate the Translated message
-            RtgsMessageValidationUtils.validateRtgsMessage(mxMessage);
+            MtToTarget2Translator<FinancialInstitutionCreditTransfer08Rtgs> mtToMxTranslator = new Mt202ToPacs009();
+            mxMessage = mtToMxTranslator.translate(swiftMessage);
+        } catch (InvalidMtMessageException e) {
+            System.out.println("MT message is invalid");
+            e.getValidationErrorList().forEach(System.out::println);
+        } catch (StopTranslationException e) {
+            System.out.println("Translation errors occurred");
+            e.getTranslationErrorList().forEach(System.out::println);
+            return;
+        } catch (TranslationUnhandledException e) {
+            System.out.println("Unexpected error occurred");
+            e.printStackTrace();
+            return;
+        }
+
+        //Validate the Translated message
+        try {
+            MxMessageValidationUtils.validateMxMessage(mxMessage);
             System.out.println("Translated Message is: \n" + mxMessage.convertToXML());
         } catch (InvalidMxMessageException e) {
-            System.out.println("The following errors occurred");
+            System.out.println("Target2 message is invalid");
             e.getValidationErrorList().forEach(System.out::println);
-        } catch (InvalidMtMessageException e) {
-            System.out.println("The following errors occurred");
-            e.getValidationErrorList().forEach(System.out::println);
-        } catch (Exception ex) {
+        } catch (JAXBException | UnsupportedEncodingException e) {
             System.out.println("Unexpected error occurred");
-            System.err.println(ex.getMessage());
+            e.printStackTrace();
         }
     }
 
