@@ -10,7 +10,7 @@ and vice versa according to Target2 (RTGS) guidelines.
 It's a simple maven project, you can download it and run it, with Java 1.8 or above.
 
 ## SDK setup
-Incorporate the SDK [jar](https://nexus.paymentcomponents.com/repository/public/gr/datamation/translator-rtgs/4.0.0/translator-rtgs-4.0.0-demo.jar)
+Incorporate the SDK [jar](https://nexus.paymentcomponents.com/repository/public/gr/datamation/translator-rtgs/4.2.0/translator-rtgs-4.2.0-demo.jar)
 into your project by the regular IDE means.  
 This process will vary depending upon your specific IDE and you should consult your documentation on how to deploy a bean.  
 For example in Intellij all that needs to be done is to import the jar files into a project. Alternatively, you can import it as a Maven or Gradle dependency.
@@ -30,7 +30,7 @@ Import the SDK
 <dependency>
     <groupId>gr.datamation</groupId>
     <artifactId>translator-rtgs</artifactId>
-    <version>4.0.0</version>
+    <version>4.2.0</version>
     <classifier>demo</classifier>
 </dependency>
 ```
@@ -70,7 +70,7 @@ repositories {
 
 Import the SDK
 ```groovy
-implementation 'gr.datamation:translator-rtgs:4.0.0:demo@jar'
+implementation 'gr.datamation:translator-rtgs:4.2.0:demo@jar'
 ```
 
 Import additional dependencies if not included in your project
@@ -82,15 +82,15 @@ implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.
 
 ## Supported MT > MX Translations
 
-| MT message    | MX message      | Translator Class | Multiple MTX support | Available in Demo |
-|---------------|-----------------|------------------|:--------------------:|:-----------------:|
-| MT103         | pacs.008.001.08 | Mt103ToPacs008   |       &cross;        |                   |
-| MT103+        | pacs.008.001.08 | Mt103ToPacs008   |       &cross;        |                   |
-| MT103(Return) | pacs.004.001.09 | Mt103ToPacs004   |       &cross;        |                   |
-| MT202         | pacs.009.001.08 | Mt202ToPacs009   |       &cross;        |      &check;      |
-| MT202COV      | pacs.009.001.08 | Mt202ToPacs009   |       &cross;        |                   |
-| MT202(Return) | pacs.004.001.09 | Mt202ToPacs004   |       &cross;        |                   |
-| MT204         | pacs.010.001.03 | Mt204ToPacs010   |       &check;        |                   |
+| MT message    | MX message      | Translator Class | Multiple MX support | Available in Demo |
+|---------------|-----------------|------------------|:-------------------:|:-----------------:|
+| MT103         | pacs.008.001.08 | Mt103ToPacs008   |       &cross;       |                   |
+| MT103+        | pacs.008.001.08 | Mt103ToPacs008   |       &cross;       |                   |
+| MT103(Return) | pacs.004.001.09 | Mt103ToPacs004   |       &cross;       |                   |
+| MT202         | pacs.009.001.08 | Mt202ToPacs009   |       &cross;       |      &check;      |
+| MT202COV      | pacs.009.001.08 | Mt202ToPacs009   |       &cross;       |                   |
+| MT202(Return) | pacs.004.001.09 | Mt202ToPacs004   |       &cross;       |                   |
+| MT204         | pacs.010.001.03 | Mt204ToPacs010   |       &check;       |                   |
 
 _* Multiple MX are splitted in text by an empty line_
 
@@ -115,16 +115,19 @@ _* Multiple MX are splitted in text by an empty line_
 ### Auto Translation
 
 You have the option to provide the MT or RTGS message and the library auto translates it to its equivalent.  
-Both input and output are in text format.  
+Input should be in text format.  
+Output could be either in text format or an Object.  
 You need to call the following static methods of `RtgsTranslator` class.  
-In case of no error of the input message, you will get the formatted translated message.  
+In case of no error of the input message, you will get the translated message.  
 When MT message is used as input it is not validated.  
 Translated message is not validated.
 ```java
 public static String translateMtToMx(String mtMessage) throws InvalidMtMessageException, StopTranslationException, TranslationUnhandledException
+public static CoreMessage[] translateMtToMxObject(String mtMessage) throws InvalidMtMessageException, StopTranslationException, TranslationUnhandledException
 ```
 ```java
 public static String translateMxToMt(String mxMessage) throws InvalidMxMessageException, StopTranslationException, TranslationUnhandledException
+public static SwiftMessage[] translateMxToMtObject(String mxMessage) throws InvalidMxMessageException, StopTranslationException, TranslationUnhandledException
 ```
 
 ### Explicit Translation
