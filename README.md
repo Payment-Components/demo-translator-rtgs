@@ -91,6 +91,7 @@ implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.
 | MT103         | pacs.008.001.08 | Mt103ToPacs008   |       &cross;       |                   |
 | MT103+        | pacs.008.001.08 | Mt103ToPacs008   |       &cross;       |                   |
 | MT103(Return) | pacs.004.001.09 | Mt103ToPacs004   |       &cross;       |                   |
+| MT192         | camt.056.001.08 | Mt192ToCamt056   |       &cross;       |                   |
 | MT202         | pacs.009.001.08 | Mt202ToPacs009   |       &cross;       |      &check;      |
 | MT202COV      | pacs.009.001.08 | Mt202ToPacs009   |       &cross;       |                   |
 | MT202(Return) | pacs.004.001.09 | Mt202ToPacs004   |       &cross;       |                   |
